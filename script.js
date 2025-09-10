@@ -1,14 +1,45 @@
 $(document).ready(function() {
     const countriesContainer = $('#countries-container');
     const apiUrl = 'https://restcountries.com/v3.1/all?fields=name,capital,population,flags,languages,currencies,timezones,maps,cca2';
-    let allCountriesData = []; 
+    let allCountriesData = [];
+
+    const weatherApiKey = '%%WEATHER_API_KEY%%';
+
+    function fetchWeather(capital, container) {
+        if (!capital) {
+            container.html('<p class="text-white-50">לא צוינה עיר בירה לקבלת תחזית.</p>');
+            return;
+        }
+
+        const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${weatherApiKey}&units=metric&lang=he`;
+        container.html('<p class="text-white-50">טוען מידע על מזג האוויר...</p>');
+
+        $.ajax({
+            url: weatherApiUrl,
+            method: 'GET',
+            success: function(weather) {
+                const weatherHtml = `
+                    <h6>מזג האוויר ב${capital}</h6>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img src="https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png" alt="Weather icon">
+                        <span class="display-6 ms-3">${Math.round(weather.main.temp)}°C</span>
+                        <span class="ms-3 fs-5">${weather.weather[0].description}</span>
+                    </div>
+                `;
+                container.html(weatherHtml);
+            },
+            error: function() {
+                container.html('<p class="text-warning">לא נמצא מידע על מזג האוויר עבור עיר זו.</p>');
+            }
+        });
+    }
 
     $.ajax({
         url: apiUrl,
         method: 'GET',
         success: function(countries) {
             const filteredCountries = countries.filter(country => country.name.official !== 'State of Palestine');
-            allCountriesData = filteredCountries; 
+            allCountriesData = filteredCountries;
             displayCountries(allCountriesData);
         },
         error: function(error) {
@@ -52,17 +83,22 @@ $(document).ready(function() {
             const currencyText = `${currency.name} (${currency.symbol})`;
 
             const modalContent = `
-               <img src="${countryData.flags.svg}" alt="Flag of ${countryData.name.official}" class="modal-flag">
-               <h4>${countryData.name.official}</h4>
-               <hr style="border-top: 1px solid rgba(255, 255, 255, 0.2);">
-               <p><strong>בירה:</strong> ${countryData.capital ? countryData.capital[0] : 'N/A'}</p>
-               <p><strong>שפות:</strong> ${languages}</p>
-               <p><strong>מטבע:</strong> ${currencyText}</p>
-               <p><strong>אזור זמן:</strong> ${countryData.timezones[0]}</p>
-               <a href="${countryData.maps.googleMaps}" target="_blank" class="btn btn-info mt-3">הצג במפה</a>
-               `;
+              <img src="${countryData.flags.svg}" alt="Flag of ${countryData.name.official}" class="modal-flag">
+              <h4>${countryData.name.official}</h4>
+              <p><strong>בירה:</strong> ${countryData.capital ? countryData.capital[0] : 'N/A'}</p>
+              <p><strong>שפות:</strong> ${languages}</p>
+              <p><strong>מטבע:</strong> ${currencyText}</p>
+              <p><strong>אזור זמן:</strong> ${countryData.timezones[0]}</p>
+              <a href="${countryData.maps.googleMaps}" target="_blank" class="btn btn-info mt-3">הצג במפה</a>
+    
+              <hr style="border-top: 1px solid rgba(255, 255, 255, 0.2);">
+              <div id="weatherInfo" class="mt-3"></div>
+            `;
             
             $('#modalBodyContent').html(modalContent);
+
+            fetchWeather(countryData.capital ? countryData.capital[0] : null, $('#weatherInfo'));
+
             $('#countryModal').modal('show');
         }
     });

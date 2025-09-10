@@ -1,0 +1,22 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # מריץ את הפעולה בכל פעם שיש push לענף main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Replace API Key 🔑
+        run: |
+          sed -i "s|%%WEATHER_API_KEY%%|${{ secrets.WEATHER_API_KEY }}|g" script.js
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: . # מעלה את כל תוכן התיקייה הנוכחית
