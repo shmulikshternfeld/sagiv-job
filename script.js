@@ -1,7 +1,7 @@
 $(document).ready(function() {
     
     const countriesContainer = $('#countries-container');
-    const apiUrl = 'https://restcountries.com/v3.1/all';
+    const apiUrl = 'https://restcountries.com/v3.1/all?fields=name,capital,population,flags';
     $.ajax({
         url: apiUrl,
         method: 'GET',
