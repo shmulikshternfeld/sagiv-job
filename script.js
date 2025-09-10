@@ -3,36 +3,40 @@ $(document).ready(function() {
     const apiUrl = 'https://restcountries.com/v3.1/all?fields=name,capital,population,flags,languages,currencies,timezones,maps,cca2';
     let allCountriesData = [];
 
-    const weatherApiKey = '6eee3bb8526b4f78970001eb31a636e1';
-
-    function fetchWeather(capital, container) {
-        if (!capital) {
-            container.html('<p class="text-white-50">לא צוינה עיר בירה לקבלת תחזית.</p>');
-            return;
-        }
-
-        const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${weatherApiKey}&units=metric&lang=he`;
-        container.html('<p class="text-white-50">טוען מידע על מזג האוויר...</p>');
-
-        $.ajax({
-            url: weatherApiUrl,
-            method: 'GET',
-            success: function(weather) {
-                const weatherHtml = `
-                    <h6>מזג האוויר ב${capital}</h6>
-                    <div class="d-flex align-items-center justify-content-center">
-                        <img src="https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png" alt="Weather icon">
-                        <span class="display-6 ms-3">${Math.round(weather.main.temp)}°C</span>
-                        <span class="ms-3 fs-5">${weather.weather[0].description}</span>
-                    </div>
-                `;
-                container.html(weatherHtml);
-            },
-            error: function() {
-                container.html('<p class="text-warning">לא נמצא מידע על מזג האוויר עבור עיר זו.</p>');
-            }
-        });
+function fetchWeather(capital, container) {
+    if (!capital) {
+        container.html('<p class="text-white-50">לא צוינה עיר בירה לקבלת תחזית.</p>');
+        return;
     }
+
+    // הכתובת החדשה - ללא מפתח API
+    const weatherApiUrl = `https://wttr.in/${capital}?format=j1`; 
+    container.html('<p class="text-white-50">טוען מידע על מזג האוויר...</p>');
+
+    $.ajax({
+        url: weatherApiUrl,
+        method: 'GET',
+        success: function(weather) {
+            // מבנה התשובה כאן שונה, לכן אנו ניגשים למידע בצורה אחרת
+            const currentCondition = weather.current_condition[0];
+            const temp = currentCondition.temp_C;
+            const description = currentCondition.weatherDesc[0].value;
+            // ל-API הזה אין אייקונים, אז נסתפק בטקסט
+
+            const weatherHtml = `
+                <h6>מזג האוויר ב${capital}</h6>
+                <div class="d-flex align-items-center justify-content-center">
+                    <span class="display-6 ms-3">${temp}°C</span>
+                    <span class="ms-3 fs-5">${description}</span>
+                </div>
+            `;
+            container.html(weatherHtml);
+        },
+        error: function() {
+            container.html('<p class="text-warning">לא נמצא מידע על מזג האוויר עבור עיר זו.</p>');
+        }
+    });
+}
 
     $.ajax({
         url: apiUrl,
