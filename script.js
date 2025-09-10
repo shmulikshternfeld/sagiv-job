@@ -9,7 +9,7 @@ function fetchWeather(capital, container) {
         return;
     }
 
-    // הכתובת החדשה - ללא מפתח API
+   
     const weatherApiUrl = `https://wttr.in/${capital}?format=j1`; 
     container.html('<p class="text-white-50">טוען מידע על מזג האוויר...</p>');
 
@@ -17,11 +17,11 @@ function fetchWeather(capital, container) {
         url: weatherApiUrl,
         method: 'GET',
         success: function(weather) {
-            // מבנה התשובה כאן שונה, לכן אנו ניגשים למידע בצורה אחרת
+            
             const currentCondition = weather.current_condition[0];
             const temp = currentCondition.temp_C;
             const description = currentCondition.weatherDesc[0].value;
-            // ל-API הזה אין אייקונים, אז נסתפק בטקסט
+            
 
             const weatherHtml = `
                 <h6>מזג האוויר ב${capital}</h6>
