@@ -7,7 +7,7 @@ $(document).ready(function() {
         method: 'GET',
          success: function(countries) {
             const filteredCountries = countries.filter(country => country.name.official !== 'State of Palestine');
-            displayCountries(countries);
+            displayCountries(filteredCountries);
         },
         error: function(error) {
             console.error("Error fetching data:", error);
