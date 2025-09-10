@@ -39,4 +39,19 @@ $(document).ready(function() {
             countriesContainer.append(countryCardHtml);
         });
     }
+    $('#searchInput').on('keyup', function() {
+        const searchTerm = $(this).val().toLowerCase();
+
+        
+        $('.col-xl-3').each(function() {
+            const countryName = $(this).find('.card-title').text().toLowerCase();
+            
+           
+            if (countryName.includes(searchTerm)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
 });
