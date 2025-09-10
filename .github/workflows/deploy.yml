@@ -19,4 +19,5 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: . # מעלה את כל תוכן התיקייה הנוכחית
+          token: ${{ secrets.PAGES_DEPLOY_TOKEN }} # שימוש ב-PAT החדש
+          folder: .
