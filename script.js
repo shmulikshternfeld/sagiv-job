@@ -6,6 +6,7 @@ $(document).ready(function() {
         url: apiUrl,
         method: 'GET',
          success: function(countries) {
+            const filteredCountries = countries.filter(country => country.name.official !== 'State of Palestine');
             displayCountries(countries);
         },
         error: function(error) {
