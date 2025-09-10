@@ -1,22 +1,112 @@
+
+:root {
+    --accent-color: #f72585; 
+    --text-color: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    color: var(--text-color);
+   
+    background: linear-gradient(-45deg, #4cc9f0, #4361ee, #7209b7, #f72585);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+h1, h2, h3, h4, h5, h6, .display-4, .lead {
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-section {
+    padding: 6rem 0;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 40vh; 
+}
+
+#searchInput {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    border-radius: 10px;
+    
+    max-width: 600px; 
+    
+    margin: 0 auto; 
+}
+
+#searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#searchInput:focus {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 4px rgba(247, 37, 133, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+}
 .country-card {
-    transition: transform 0.2s ease-in-out;
-    height: 100%; 
+    
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); 
+
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    overflow: hidden;
 }
 
 .country-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-10px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.15);
 }
 
 .country-flag {
     width: 100%;
-    height: 180px;
-    object-fit: cover; 
+    height: 170px;
+    object-fit: cover;
 }
+
+.card-body {
+    padding: 1.5rem;
+    color: var(--text-color);
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.3rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.card-text strong {
+    font-weight: 700;
+}
+
 #backToTopBtn {
-    display: none; 
-    position: fixed; 
+    display: none;
+    position: fixed;
     bottom: 25px;
     right: 25px;
     z-index: 1000;
+    background-color: var(--accent-color);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-size: 1.2rem;
+    width: 50px;
+    height: 50px;
+    padding: 0;
 }
