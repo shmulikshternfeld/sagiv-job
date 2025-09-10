@@ -110,3 +110,48 @@ h1, h2, h3, h4, h5, h6, .display-4, .lead {
     height: 50px;
     padding: 0;
 }
+.modal-content {
+  
+    background: rgba(30, 30, 40, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    color: #ffffff;
+}
+
+.modal-header, .modal-footer {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: none;
+}
+
+.modal-header {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+#modalBodyContent {
+    text-align: center; 
+}
+
+#modalBodyContent img.modal-flag {
+    width: 150px; 
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+#modalBodyContent h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+}
+
+#modalBodyContent p {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
