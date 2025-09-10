@@ -55,4 +55,19 @@ $(document).ready(function() {
             }
         });
     });
+    const backToTopBtn = $('#backToTopBtn');
+
+   
+    $(window).on('scroll', function() {
+        if ($(this).scrollTop() > 200) {
+            backToTopBtn.fadeIn();
+        } else {
+            backToTopBtn.fadeOut();
+        }
+    });
+
+    
+    backToTopBtn.on('click', function() {
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+    });
 });

@@ -13,3 +13,10 @@
     height: 180px;
     object-fit: cover; 
 }
+#backToTopBtn {
+    display: none; 
+    position: fixed; 
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+}
